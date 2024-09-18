@@ -38,7 +38,7 @@ const Navbar = (props: Props) => {
           </div>
           <div>
             <div className="flex">
-              {true ? (
+              {false ? (
                 //   {isLoggedIn ? (
                 <div className="flex items-center justify-center relative">
                   {/* Show users icon  */}
