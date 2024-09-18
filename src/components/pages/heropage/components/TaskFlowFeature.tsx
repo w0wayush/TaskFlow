@@ -38,7 +38,7 @@ const TaskFlowFeature = (props: Props) => {
   ];
 
   return (
-    <div className="px-8 py-28 relative bg-cover bg-center">
+    <div className="px-8 py-36 relative bg-cover bg-center">
       <SparklesCore
         background="transparent"
         minSize={1}
@@ -47,7 +47,7 @@ const TaskFlowFeature = (props: Props) => {
         className="absolute inset-0 w-full h-full z-0"
         particleColor="#FFFFFF"
       />
-      <h2 className="text-5xl font-bold text-center mb-16 text-white">
+      <h2 className="text-6xl font-extrabold text-center mb-16 ">
         Our Benefits
       </h2>
       <div className="space-y-16">

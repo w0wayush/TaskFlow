@@ -32,9 +32,6 @@ export function TaskAdvantages() {
             </p>
 
             {/* Decorative Lines */}
-            {/* <div className="absolute inset-x-10 top-0 h-[2px] w-full bg-gradient-to-r from-transparent via-blue-800 to-transparent blur-sm z-10" />
-            <div className="absolute inset-x-16 top-4 h-[3px] w-3/4 bg-gradient-to-r from-transparent via-blue-900 to-transparent blur-sm z-10" />
-            <div className="absolute inset-x-20 top-6 h-[1px] w-2/4 bg-gradient-to-r from-transparent via-blue-900 to-transparent blur-sm z-10" /> */}
           </div>
 
           {/* Call to Action */}
@@ -43,6 +40,9 @@ export function TaskAdvantages() {
           </button>
         </div>
       </BackgroundGradientAnimation>
+      <div className="absolute inset-x-10 top-0 h-[2px] w-full bg-gradient-to-r from-transparent via-blue-800 to-transparent blur-sm z-10" />
+      <div className="absolute inset-x-16 top-4 h-[3px] w-3/4 bg-gradient-to-r from-transparent via-blue-900 to-transparent blur-sm z-10" />
+      <div className="absolute inset-x-20 top-6 h-[1px] w-2/4 bg-gradient-to-r from-transparent via-blue-900 to-transparent blur-sm z-10" />
     </div>
   );
 }

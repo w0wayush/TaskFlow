@@ -9,6 +9,7 @@ import Image from "next/image";
 import { TaskAdvantages } from "./components/TaskAdvantages";
 import Feature from "./components/TaskFlowFeature";
 import TaskFlowFeature from "./components/TaskFlowFeature";
+import { CustomerSection } from "./components/CustomerSection";
 
 type Props = {};
 
@@ -57,14 +58,19 @@ const HeroPage = (props: Props) => {
         </div>
       </div>
 
-      {/* 2nd Hero page */}
+      {/* 2nd Hero Component */}
       <div className="min-h-screen ">
         <TaskAdvantages />
       </div>
 
-      {/* 3rd Hero Page */}
+      {/* 3rd Hero Component */}
       <div className="min-h-screen ">
         <TaskFlowFeature />
+      </div>
+
+      {/* 4th hero Component */}
+      <div>
+        <CustomerSection />
       </div>
     </div>
   );
