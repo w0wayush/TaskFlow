@@ -25,7 +25,7 @@ const Navbar = (props: Props) => {
   };
 
   return (
-    <div className="border-b-2 rounded-b-md p-4 border-slate-800 px-10">
+    <div className="border-b-2 rounded-b-md p-4 border-slate-700 px-10">
       {/* FlowZone Logo */}
       <div className="flex justify-between items-center ">
         <div className="flex items-center gap-1 cursor-pointer">

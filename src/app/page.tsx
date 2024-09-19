@@ -11,8 +11,7 @@ export default function Home() {
         <Navbar />
 
         {/* Task Management Dashboard or HeroPage based on if the user is logged-in or not */}
-        {/* {isLoggedIn ? <TaskManagerDashboard /> : <HeroPage />} */}
-        {false ? <TaskManagerDashboard /> : <HeroPage />}
+        <HeroPage />
       </h1>
     </div>
   );
