@@ -7,7 +7,7 @@ import { FaStar } from "react-icons/fa";
 export function CustomerSection() {
   return (
     <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
-      <div className="text-black text-5xl md:text-6xl font-semibold mb-12">
+      <div className="text-black text-3xl md:text-6xl font-semibold mb-12">
         What Customer Says
         {/* <p className="flex justify-center items-center gap-4 mt-3"></p> */}
         <p className="flex justify-center items-center gap-4 mt-3">

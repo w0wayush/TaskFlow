@@ -11,9 +11,7 @@ import Feature from "./components/TaskFlowFeature";
 import TaskFlowFeature from "./components/TaskFlowFeature";
 import { CustomerSection } from "./components/CustomerSection";
 
-type Props = {};
-
-const HeroPage = (props: Props) => {
+const HeroPage = () => {
   const taskAdvantage = [
     { title: "Manage" },
     { title: "Optimize" },
@@ -32,11 +30,11 @@ const HeroPage = (props: Props) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentIndex((currentIndex + 1) % taskAdvantage.length);
-    }, 2000); // change every 2 seconds
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % taskAdvantage.length);
+    }, 2000);
 
     return () => clearInterval(intervalId);
-  }, [currentIndex, taskAdvantage]);
+  }, [taskAdvantage.length]);
 
   return (
     <div className="min-h-screen py-10 px-5 sm:px-10">

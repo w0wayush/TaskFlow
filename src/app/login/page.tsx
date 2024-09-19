@@ -1,9 +1,7 @@
 import LoginPage from "@/components/pages/login/LoginPage";
 import React from "react";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <div>
       <LoginPage />

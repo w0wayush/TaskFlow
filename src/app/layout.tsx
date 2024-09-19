@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "./provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,9 +17,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "TaskFlow",
-  // title: "FlowZone",
   description:
-    "FlowZone is used for a smooth flow of tasks and efficient management.",
+    "TaskFlow is used for a smooth flow of tasks and efficient management.",
 };
 
 export default function RootLayout({
@@ -37,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
     </html>

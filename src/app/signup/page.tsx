@@ -1,9 +1,7 @@
 import SignUpPage from "@/components/pages/login/SignUpPage";
 import React from "react";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <div>
       <SignUpPage />
