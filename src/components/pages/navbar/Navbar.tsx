@@ -7,10 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Theme } from "@/components/theme";
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
+import Link from "next/link";
+// import { useRouter } from "next/router";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
+  //   const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -22,7 +25,7 @@ const Navbar = (props: Props) => {
   };
 
   return (
-    <div className="border-b-2 rounded-b-md p-4 border-slate-800">
+    <div className="border-b-2 rounded-b-md p-4 border-slate-800 px-10">
       {/* FlowZone Logo */}
       <div className="flex justify-between items-center ">
         <div className="flex items-center gap-1 cursor-pointer">
@@ -68,22 +71,27 @@ const Navbar = (props: Props) => {
               ) : (
                 <div>
                   {/* Create Account Button for small screens */}
-                  <Button
-                    variant="default"
-                    className="lg:hidden block px-4 py-2 text-sm font-medium  ml-4 flex"
-                  >
-                    <FaUser className="mr-2 " />
-                    Create Account
-                  </Button>
-
+                  <Link href={"/login"}>
+                    <Button
+                      variant="default"
+                      className="lg:hidden block px-4 py-2 text-sm font-medium  ml-4 flex"
+                      // onClick={() => route.push("/login")}
+                    >
+                      <FaUser className="mr-2 " />
+                      Create Account
+                    </Button>
+                  </Link>
                   {/* Login / Register Button for Large screens */}
-                  <Button
-                    variant="default"
-                    className="lg:block hidden lg:flex lg:px-4 lg:py-2 lg:text-sm lg:font-medium  lg:ml-4"
-                  >
-                    <FaUser className="mr-2 " />
-                    Login / Register
-                  </Button>
+                  <Link href={"/login"}>
+                    <Button
+                      variant="default"
+                      className="lg:block hidden lg:flex lg:px-4 lg:py-2 lg:text-sm lg:font-medium  lg:ml-4"
+                      //   onClick={() => route.push("/login")}
+                    >
+                      <FaUser className="mr-2 " />
+                      Login / Register
+                    </Button>
+                  </Link>
                 </div>
               )}
             </div>
