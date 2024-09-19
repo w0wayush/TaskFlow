@@ -1,37 +1,44 @@
 import { Request, Response } from "express";
 import { Task } from "../models/taskSchema";
 import { User } from "../models/userSchema";
+import { taskSchema } from "../lib/taskType";
 
 // Create a new task
 export const createTask = async (req: Request, res: Response) => {
-  const { title, description, status, priority, dueDate } = req.body;
-  //@ts-ignore
-  const userId = req.user?.id;
-
-  // Create task
-  const newTask = new Task({
-    title,
-    description,
-    status,
-    priority,
-    dueDate,
-  });
-
   try {
+    // Validate request body
+    taskSchema.parse(req.body);
+
+    const { title, description, status, priority, dueDate } = req.body;
+    //@ts-ignore
+    const userId = req.user?.id;
+
+    // Create task
+    const newTask = new Task({
+      title,
+      description,
+      status,
+      priority,
+      dueDate,
+    });
+
     const task = await newTask.save();
     await User.findByIdAndUpdate(userId, { $push: { tasks: task._id } }); // Add task to user's task array
     res.status(201).json(task);
   } catch (error) {
-    res.status(500).json({ message: "Error creating task", error });
+    res.status(400).json({ message: "Error creating task", error });
   }
 };
 
 // Update a task
 export const updateTask = async (req: Request, res: Response) => {
-  const { taskId } = req.params;
-  const { title, description, status, priority, dueDate } = req.body;
-
   try {
+    // Validate request body
+    taskSchema.parse(req.body);
+
+    const { taskId } = req.params;
+    const { title, description, status, priority, dueDate } = req.body;
+
     const task = await Task.findByIdAndUpdate(
       taskId,
       { title, description, status, priority, dueDate },
@@ -42,16 +49,15 @@ export const updateTask = async (req: Request, res: Response) => {
     }
     res.status(200).json(task);
   } catch (error) {
-    res.status(500).json({ message: "Error updating task", error });
+    res.status(400).json({ message: "Error updating task", error });
   }
 };
 
 // Delete a task
 export const deleteTask = async (req: Request, res: Response) => {
-  const { taskId } = req.params;
   //@ts-ignore
-
   const userId = req.user?.id;
+  const { taskId } = req.params;
 
   try {
     const task = await Task.findByIdAndDelete(taskId);
@@ -64,7 +70,7 @@ export const deleteTask = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "Task deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting task", error });
+    res.status(400).json({ message: "Error deleting task", error });
   }
 };
 
@@ -81,6 +87,6 @@ export const getUserTasks = async (req: Request, res: Response) => {
 
     res.status(200).json(user.tasks);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching tasks", error });
+    res.status(400).json({ message: "Error fetching tasks", error });
   }
 };

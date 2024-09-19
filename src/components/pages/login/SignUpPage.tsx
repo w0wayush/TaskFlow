@@ -1,17 +1,57 @@
 "use client";
 
 import React from "react";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { signUpSchema } from "@/lib/validationSchema";
+import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { signIn, useSession } from "next-auth/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaGithub, FaGoogle } from "react-icons/fa";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+// import { useNavigate } from "react-router-dom";
+
+type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 const SignUpPage = () => {
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Handle sign-up logic here
+  const navigate = useRouter();
+
+  const { data: session } = useSession();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpSchema),
+    mode: "onChange",
+  });
+
+  const onSubmit = async (data: SignUpFormValues) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/signup`,
+        data
+      );
+
+      // Handle success
+      // console.log(response.data);
+      navigate.push("/login");
+    } catch (error) {
+      // Handle error
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Error submitting form:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    }
   };
 
   return (
@@ -23,49 +63,56 @@ const SignUpPage = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  placeholder="John"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Doe"
-                  required
-                />
-              </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="username">User Name</Label>
+              <Input
+                id="username"
+                placeholder="ayushw0w"
+                {...register("username")}
+                className={`border ${errors.username ? "border-red-500" : ""}`}
+              />
+              {errors.username && (
+                <p className="text-xs text-red-400">
+                  {errors.username.message}
+                </p>
+              )}
+              {errors.username && (
+                <p className="text-xs text-red-400">
+                  {errors.username.message}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 type="email"
                 id="email"
-                name="email"
-                placeholder="john.doe@example.com"
-                required
+                placeholder="ayushpandey@gmail.com"
+                {...register("email")}
+                className={`border ${errors.email ? "border-red-500" : ""}`}
               />
+              {errors.email && (
+                <p className="text-xs text-red-400">{errors.email.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 type="password"
                 id="password"
-                name="password"
                 placeholder="Create a strong password"
-                required
+                {...register("password")}
+                className={`border ${errors.password ? "border-red-500" : ""}`}
               />
+              {errors.password && (
+                <p className="text-xs text-red-400">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" />
+            {/* <div className="flex items-center space-x-2">
+              <Checkbox id="terms" {...register("terms")} />
               <label htmlFor="terms" className="text-sm text-muted-foreground">
                 I agree to the{" "}
                 <a href="#" className="text-primary hover:underline">
@@ -76,7 +123,10 @@ const SignUpPage = () => {
                   Privacy Policy
                 </a>
               </label>
-            </div>
+              {errors.terms && (
+                <p className="text-xs text-red-400">{errors.terms.message}</p>
+              )}
+            </div> */}
             <Button type="submit" className="w-full">
               Create Account
             </Button>
@@ -88,19 +138,29 @@ const SignUpPage = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or sign up with
+                Or continue with
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            <Button variant="outline" className="w-full">
-              <FaGoogle className="mr-2 h-4 w-4" /> Google
-            </Button>
-            <Button variant="outline" className="w-full">
-              <FaGithub className="mr-2 h-4 w-4" /> GitHub
-            </Button>
-          </div>
+          {!session && (
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              <Button
+                onClick={() => signIn("google")}
+                variant="outline"
+                className="w-full"
+              >
+                <FaGoogle className="mr-2 h-4 w-4" /> Google
+              </Button>
+              <Button
+                onClick={() => signIn("github")}
+                variant="outline"
+                className="w-full"
+              >
+                <FaGithub className="mr-2 h-4 w-4" /> GitHub
+              </Button>
+            </div>
+          )}
 
           <p className="text-center text-sm text-muted-foreground mt-6">
             Already have an account?{" "}

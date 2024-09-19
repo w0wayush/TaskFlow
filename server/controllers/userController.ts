@@ -2,43 +2,50 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/userSchema";
+import { signUpSchema, signInSchema } from "../lib/userType";
 
 // JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || "taskflow_bdw0w";
 
 // Register (Sign Up) a new user
 export const signUp = async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
-
-  // Check if the user already exists
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    return res.status(400).json({ message: "User already exists" });
-  }
-
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Create a new user
-  const newUser = new User({
-    username,
-    email,
-    password: hashedPassword,
-  });
-
   try {
+    // Validate request body
+    signUpSchema.parse(req.body);
+
+    const { username, email, password } = req.body;
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
     await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user", error });
+    res.status(400).json({ message: "Error registering user", error });
   }
 };
 
 // Login (Sign In) an existing user
 export const signIn = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-
   try {
+    // Validate request body
+    signInSchema.parse(req.body);
+
+    const { email, password } = req.body;
+
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
@@ -57,7 +64,7 @@ export const signIn = async (req: Request, res: Response) => {
     });
     res.status(200).json({ message: "Logged in successfully", token });
   } catch (error) {
-    res.status(500).json({ message: "Error logging in", error });
+    res.status(400).json({ message: "Error logging in", error });
   }
 };
 
