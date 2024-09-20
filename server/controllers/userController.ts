@@ -62,7 +62,15 @@ export const signIn = async (req: Request, res: Response) => {
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.status(200).json({ message: "Logged in successfully", token });
+    res.status(200).json({
+      message: "Logged in successfully",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
   } catch (error) {
     res.status(400).json({ message: "Error logging in", error });
   }
@@ -71,10 +79,20 @@ export const signIn = async (req: Request, res: Response) => {
 // Get User Profile (Protected route example)
 export const getUserProfile = async (req: Request, res: Response) => {
   //@ts-ignore
-  const userId = req.user?.id;
-  const user = await User.findById(userId).select("-password");
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+  const userId = req.user?.userId; // Extract user ID from the request
+  // console.log(userId);
+  try {
+    // Find the user by ID and populate the tasks
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate("tasks");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user profile", error });
   }
-  res.json(user);
 };

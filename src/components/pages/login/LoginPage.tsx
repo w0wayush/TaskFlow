@@ -13,12 +13,16 @@ import { signIn, useSession } from "next-auth/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/app/store/slices/userSlice";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
   const navigate = useRouter();
   const { data: session } = useSession();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -36,6 +40,15 @@ const LoginPage = () => {
 
       // Handle success
       console.log(response.data);
+      const { token, user } = response.data;
+
+      // Dispatch action to update Redux store
+      dispatch(setUser({ token, user }));
+
+      // Store token in localStorage (optional, depending on your security requirements)
+      // localStorage.setItem("taskflow_token", token);
+      // console.log("Token successfully set");
+
       navigate.push("/");
     } catch (error) {
       // Handle error
