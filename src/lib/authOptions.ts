@@ -1,11 +1,13 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, User as NextAuthUser } from "next-auth";
 // import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth";
 // import bcrypt from "bcrypt";
 // import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "taskflow0w";
+// const JWT_SECRET = process.env.JWT_SECRET || "taskflow0w";
 
 // Define the authentication options
 export const authOptions: NextAuthOptions = {
@@ -68,17 +70,17 @@ export const authOptions: NextAuthOptions = {
     maxAge: 30 * 24 * 60 * 60,
   },
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }: { token: JWT; user?: NextAuthUser }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
       }
       return token;
     },
-    async session({ session, token }: any) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (token) {
         session.user = {
-          id: token.id,
+          // id: token.id
           email: token.email,
         };
       }

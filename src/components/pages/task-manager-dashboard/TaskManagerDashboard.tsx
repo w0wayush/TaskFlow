@@ -4,18 +4,17 @@ import React, { useState, useCallback } from "react";
 import {
   DndContext,
   DragEndEvent,
-  DragMoveEvent,
-  DragOverlay,
-  DragStartEvent,
+  // DragMoveEvent,
+  // DragOverlay,
+  // DragStartEvent,
   KeyboardSensor,
   PointerSensor,
-  UniqueIdentifier,
+  // UniqueIdentifier,
   closestCorners,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,11 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  SortableContext,
-  arrayMove,
-  sortableKeyboardCoordinates,
-} from "@dnd-kit/sortable";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
@@ -46,9 +41,7 @@ import {
 import { format } from "date-fns";
 import { CalendarIcon, Plus } from "lucide-react";
 import Navbar from "@/components/pages/navbar/Navbar";
-import TaskCard from "./components/TaskCard";
 import Column from "./components/Column";
-import KanbanBoard from "./components/KanbanBoard";
 import Tasks from "./components/Tasks";
 
 type Task = {
@@ -64,14 +57,15 @@ const TaskManagerDashboard = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<Partial<Task>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filterStatus, setFilterStatus] = useState<Task["status"] | "All">(
+  /*   const [filterStatus, setFilterStatus] = useState<Task["status"] | "All">(
     "All"
   );
 
   const [filterPriority, setFilterPriority] = useState<
     Task["priority"] | "All"
   >("All");
-  const [sortBy, setSortBy] = useState<"priority" | "dueDate">("priority");
+
+  const [sortBy, setSortBy] = useState<"priority" | "dueDate">("priority"); */
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -95,40 +89,44 @@ const TaskManagerDashboard = () => {
     }
   };
 
-  const updateTask = (updatedTask: Task) => {
-    setTasks(
+  const updateTask = useCallback((updatedTask: Task) => {
+    setTasks((tasks) =>
       tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
-  };
+  }, []);
 
-  const deleteTask = (id: string) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
+  const deleteTask = useCallback((id: string) => {
+    setTasks((tasks) => tasks.filter((task) => task.id !== id));
+  }, []);
 
-  function handleDragStart(event: DragStartEvent) {
-    const { active } = event;
-    const { id } = active;
-    setActiveId(id);
-  }
+  // function handleDragStart(event: DragStartEvent) {
+  //   const { active } = event;
+  //   const { id } = active;
+  //   // @ts-expect-error
+  //   setActiveId(id);
+  // }
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
 
-    if (!over) return;
+      if (!over) return;
 
-    const activeTask = tasks.find((task) => task.id === active.id);
-    const overColumn = over.id as Task["status"];
+      const activeTask = tasks.find((task) => task.id === active.id);
+      const overColumn = over.id as Task["status"];
 
-    if (activeTask && activeTask.status !== overColumn) {
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === active.id ? { ...task, status: overColumn } : task
-        )
-      );
-    }
-  };
+      if (activeTask && activeTask.status !== overColumn) {
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === active.id ? { ...task, status: overColumn } : task
+          )
+        );
+      }
+    },
+    [tasks]
+  );
 
-  const filteredTasks = tasks.filter((task) => {
+  /* const filteredTasks = tasks.filter((task) => {
     if (filterStatus !== "All" && task.status !== filterStatus) return false;
     if (filterPriority !== "All" && task.priority !== filterPriority)
       return false;
@@ -146,11 +144,11 @@ const TaskManagerDashboard = () => {
     }
     return 0;
   });
-
+ */
   const TaskList = useCallback(
     () => (
       <div className="flex flex-wrap -mx-2">
-        {sortedTasks.map((task) => (
+        {tasks.map((task) => (
           <div key={task.id} className="w-full sm:w-1/3 px-2 mb-4">
             <Tasks
               key={task.id}
@@ -162,7 +160,7 @@ const TaskManagerDashboard = () => {
         ))}
       </div>
     ),
-    [sortedTasks, updateTask, deleteTask]
+    [tasks, updateTask, deleteTask]
   );
 
   const KanbanBoard = useCallback(() => {
@@ -179,7 +177,7 @@ const TaskManagerDashboard = () => {
             <Column
               key={columnName}
               title={columnName as Task["status"]}
-              tasks={sortedTasks.filter((task) => task.status === columnName)}
+              tasks={tasks.filter((task) => task.status === columnName)}
               updateTask={updateTask}
               deleteTask={deleteTask}
             />
@@ -187,7 +185,7 @@ const TaskManagerDashboard = () => {
         </div>
       </DndContext>
     );
-  }, [sortedTasks, sensors, handleDragEnd]);
+  }, [tasks, sensors, handleDragEnd, updateTask, deleteTask]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-100 to-indigo-300 dark:from-gray-800 dark:to-gray-900 transition-all ease-in-out duration-500">

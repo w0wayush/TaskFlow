@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export function TaskAdvantages() {
   const userState = useSelector((state: RootState) => state.user);
-  const { user, token } = userState;
+  const { user } = userState;
 
   const navigate = useRouter();
 

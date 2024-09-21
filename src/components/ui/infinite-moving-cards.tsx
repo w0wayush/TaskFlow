@@ -89,7 +89,7 @@ export const InfiniteMovingCards = ({
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
-        {items.map((item, idx) => (
+        {items.map((item) => (
           <li
             className="w-[350px] max-w-full relative rounded-xl border border-gray-700 shadow-xl flex-shrink-0 px-8 py-6 md:w-[450px] transition-transform transform hover:scale-105"
             style={{

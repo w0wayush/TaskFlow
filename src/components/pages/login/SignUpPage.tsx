@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { signIn, useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaGithub, FaGoogle } from "react-icons/fa";
@@ -39,7 +38,7 @@ const SignUpPage = () => {
       );
 
       // Handle success
-      // console.log(response.data);
+      console.log(response.data);
       navigate.push("/login");
     } catch (error) {
       // Handle error

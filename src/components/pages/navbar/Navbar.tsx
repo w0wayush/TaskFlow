@@ -8,7 +8,7 @@ import { Theme } from "@/components/theme";
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 // import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
@@ -19,7 +19,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 const Navbar = () => {
-  const session = useSession();
+  // const session = useSession();
   const userState = useSelector((state: RootState) => state.user);
   const { user } = userState;
 

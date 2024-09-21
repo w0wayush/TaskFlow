@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import {
   DndContext,
   DragEndEvent,
@@ -24,24 +24,22 @@ import Container from "./components/Container";
 import TaskCard from "./components/TaskCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TaskList from "./components/TaskList";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import * as z from "zod";
 import { TaskFormValues } from "@/lib/task";
 import { taskSchema } from "@/lib/taskValidationSchema";
-import axios from "axios";
-import { RootState } from "@/app/store/store";
-import { useSelector } from "react-redux";
+// import { RootState } from "@/app/store/store";
+// import { useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import TaskCreationForm from "./components/TaskCreationForm";
 import { Task } from "@/lib/task";
 
 const Kanban = () => {
-  const userState = useSelector((state: RootState) => state.user);
-  const { user, token } = userState;
+  // const userState = useSelector((state: RootState) => state.user);
+  // const { token } = userState;
 
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTask, setNewTask] = useState<Partial<Task>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -58,9 +56,6 @@ const Kanban = () => {
   const { toast } = useToast();
 
   const {
-    register,
-    handleSubmit,
-    control,
     watch,
     setValue,
     reset,
@@ -70,6 +65,9 @@ const Kanban = () => {
   });
   const selectedDate = watch("dueDate");
 
+  console.log("formState error - ", errors);
+  console.log(selectedDate);
+  console.log("active task - ", activeTask);
   // console.log("Activeid-", activeId);
   // console.log("active tsk - ", activeTask);
 
@@ -90,7 +88,7 @@ const Kanban = () => {
     })
   );
 
-  const fetchUserTasks = async () => {
+  /*  const fetchUserTasks = async () => {
     try {
       // console.log("Token - ", token);
       const response = await axios.get(
@@ -119,8 +117,8 @@ const Kanban = () => {
   };
 
   useEffect(() => {
-    // fetchUserTasks();
-  }, []);
+    fetchUserTasks();
+  }, []); */
 
   const addOrUpdateTask = (data: TaskFormValues) => {
     let newTask: Task;
@@ -177,7 +175,7 @@ const Kanban = () => {
     setEditingTask(null);
   };
 
-  const handleUpdateTask = async (task: Task) => {
+  /* const handleUpdateTask = async (task: Task) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/${task.id}`,
@@ -244,7 +242,7 @@ const Kanban = () => {
         variant: "destructive",
       });
     }
-  };
+  }; */
 
   // Sorting and filtering logic based on filterCriteria
   // Sorting and filtering logic based on filterCriteria
@@ -384,7 +382,7 @@ const Kanban = () => {
         variant: "default",
       });
     },
-    [setTasks]
+    [setTasks, toast]
   );
 
   const deleteTask = useCallback(
@@ -396,7 +394,7 @@ const Kanban = () => {
         variant: "default",
       });
     },
-    [setTasks]
+    [setTasks, toast]
   );
 
   const openEditModal = (task: Task) => {
@@ -410,12 +408,12 @@ const Kanban = () => {
     setValue("dueDate", task.dueDate);
   };
 
-  const saveEditedTask = (updatedTask: Task) => {
+  /* const saveEditedTask = (updatedTask: Task) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
     setIsModalOpen(false);
-  };
+  }; */
 
   const editTask = useCallback(
     (task: Task) => {

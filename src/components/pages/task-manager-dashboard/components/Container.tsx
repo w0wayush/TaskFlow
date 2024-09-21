@@ -1,8 +1,8 @@
 import React from "react";
-import ContainerProps from "./container.type";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import clsx from "clsx";
+import { Button } from "@/components/ui/button";
 
 type ColumnProps = {
   id: string;
@@ -18,7 +18,7 @@ const Container = ({
   title,
   description,
   onAddItem,
-}: ContainerProps) => {
+}: ColumnProps) => {
   const {
     attributes,
     setNodeRef,
