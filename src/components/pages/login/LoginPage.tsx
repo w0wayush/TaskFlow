@@ -32,11 +32,14 @@ const LoginPage = () => {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    if (!backendUrl) {
+      console.error("NEXT_PUBLIC_BACKEND_URL is not defined");
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/login`,
-        data
-      );
+      const response = await axios.post(`${backendUrl}/api/users/login`, data);
 
       // Handle success
       console.log(response.data);

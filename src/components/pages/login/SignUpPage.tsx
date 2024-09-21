@@ -31,11 +31,14 @@ const SignUpPage = () => {
   });
 
   const onSubmit = async (data: SignUpFormValues) => {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    if (!backendUrl) {
+      console.error("NEXT_PUBLIC_BACKEND_URL is not defined");
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/signup`,
-        data
-      );
+      const response = await axios.post(`${backendUrl}/api/users/signup`, data);
 
       // Handle success
       console.log(response.data);
