@@ -112,3 +112,21 @@ export const getUserTasks = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error fetching tasks", error });
   }
 };
+
+// Get a single task for a user
+export const getSingleTask = async (req: Request, res: Response) => {
+  try {
+    const { taskId } = req.params;
+    //@ts-ignore
+    const userId = req.user?.userId;
+
+    const task = await Task.findOne({ _id: taskId }); // Ensure the task belongs to the user
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching task", error });
+  }
+};
