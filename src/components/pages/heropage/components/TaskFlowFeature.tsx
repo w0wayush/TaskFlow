@@ -1,11 +1,10 @@
 "use client";
 
 import { SparklesCore } from "@/components/ui/sparkles";
+import Image from "next/image";
 import React from "react";
 
-type Props = {};
-
-const TaskFlowFeature = (props: Props) => {
+const TaskFlowFeature = () => {
   const features = [
     {
       title: "Effortless Task Management",
@@ -36,9 +35,11 @@ const TaskFlowFeature = (props: Props) => {
         "https://i.pinimg.com/564x/b6/c5/5e/b6c55eb789fccacc4cac1d1d0b21efd6.jpg",
     },
   ];
+  const fullWidth = 1200;
+  const fullHeight = 675;
 
   return (
-    <div className="px-8 py-36 relative bg-cover bg-center">
+    <div className="px-8 py-28 relative bg-cover bg-center">
       <SparklesCore
         background="transparent"
         minSize={1}
@@ -68,9 +69,11 @@ const TaskFlowFeature = (props: Props) => {
             </div>
 
             <div className="md:w-1/3">
-              <img
+              <Image
                 src={feature.image}
                 alt={feature.title}
+                width={fullWidth}
+                height={fullHeight}
                 className="w-full h-auto rounded-lg shadow-lg object-cover"
               />
             </div>

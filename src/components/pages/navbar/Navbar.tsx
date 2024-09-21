@@ -52,7 +52,7 @@ const Navbar = () => {
         >
           <Image src={Flow} alt="Flow Zone Logo" className="h-16 w-16"></Image>
           {/* <h1>FlowZone</h1> */}
-          <h1>TaskFlow</h1>
+          <h1 className="text-lg font-bold">TaskFlow</h1>
         </div>
 
         {/* Sign-in / Sign-out and User Icon along with dark mode / light mode*/}
@@ -79,7 +79,7 @@ const Navbar = () => {
                   </div>
                   {/* Dropdown menu that will be shown on click */}
                   {isOpen && (
-                    <div className="absolute top-full right-0 mt-2 w-40 bg-slate-900  text-white font-medium rounded-md border-gray border-2">
+                    <div className="absolute top-full right-0 mt-2 w-40 bg-slate-900  text-white font-medium rounded-md border-gray border-2 z-10">
                       <ul>
                         <li
                           className="py-2 px-4 hover:bg-slate-700 cursor-pointer"

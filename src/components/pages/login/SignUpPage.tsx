@@ -77,11 +77,6 @@ const SignUpPage = () => {
                   {errors.username.message}
                 </p>
               )}
-              {errors.username && (
-                <p className="text-xs text-red-400">
-                  {errors.username.message}
-                </p>
-              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>

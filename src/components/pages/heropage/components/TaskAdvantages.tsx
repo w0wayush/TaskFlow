@@ -2,13 +2,21 @@
 import React from "react";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { RootState } from "@/app/store/store";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export function TaskAdvantages() {
+  const userState = useSelector((state: RootState) => state.user);
+  const { user, token } = userState;
+
+  const navigate = useRouter();
+
   return (
     <div className="relative h-[50rem] mt-40 text-white font-bold text-center rounded-xl px-4 overflow-hidden">
       {/* Heading */}
       <BackgroundGradientAnimation>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-none rounded-xl">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white  rounded-xl">
           {/* Full-Coverage Sparkle Effect */}
           <SparklesCore
             background="transparent"
@@ -34,9 +42,17 @@ export function TaskAdvantages() {
             {/* Decorative Lines */}
           </div>
 
-          {/* Call to Action */}
-          <button className="mt-10 py-3 px-6 bg-white text-indigo-600 text-lg font-bold rounded-full hover:bg-indigo-100 transition duration-300 ease-in-out z-20 cursor-pointer">
-            Get Started
+          <button
+            onClick={() => {
+              if (!user) {
+                navigate.push("/signup");
+              } else {
+                navigate.push("/kanban");
+              }
+            }}
+            className="mt-10 py-3 px-6 bg-white text-indigo-600 text-lg font-bold rounded-full hover:bg-indigo-100 transition duration-300 ease-in-out z-20 cursor-pointer"
+          >
+            {!user ? "Get Started" : "Manage your tasks easily!"}
           </button>
         </div>
       </BackgroundGradientAnimation>

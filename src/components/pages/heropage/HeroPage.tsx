@@ -1,17 +1,23 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import manageImage from "@/assets/manage.png";
-import optimizeImage from "@/assets/optimize.png";
-import trackImage from "@/assets/track_image.png";
-import discussImage from "@/assets/discuss.png";
+import manageImage from "@/assets/manage.jpeg";
+import optimizeImage from "@/assets/optimize.jpeg";
+import trackImage from "@/assets/track_image.jpeg";
+import discussImage from "@/assets/discuss.jpeg";
 import Image from "next/image";
 import { TaskAdvantages } from "./components/TaskAdvantages";
-import Feature from "./components/TaskFlowFeature";
+// import Feature from "./components/TaskFlowFeature";
 import TaskFlowFeature from "./components/TaskFlowFeature";
 import { CustomerSection } from "./components/CustomerSection";
+import { FooterSection } from "./components/FooterSection";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/app/store/store";
 
 const HeroPage = () => {
+  // const userState = useSelector((state: RootState) => state.user);
+  // const { user } = userState;
+
   const taskAdvantage = [
     { title: "Manage" },
     { title: "Optimize" },
@@ -67,8 +73,13 @@ const HeroPage = () => {
       </div>
 
       {/* 4th hero Component */}
-      <div>
+      <div className="min-h-screen">
         <CustomerSection />
+      </div>
+
+      {/* 5th hero Component */}
+      <div className="min-h-[30vh] -mb-10 -mx-10">
+        <FooterSection />
       </div>
     </div>
   );
