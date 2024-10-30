@@ -1,64 +1,97 @@
-"use client";
-import React from "react";
-import { SparklesCore } from "@/components/ui/sparkles";
-import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
-import { RootState } from "@/app/store/store";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { motion } from "framer-motion";
+import { Clock, CheckSquare, TrendingUp, Users } from "lucide-react";
+import Link from "next/link";
 
 export function TaskAdvantages() {
-  const userState = useSelector((state: RootState) => state.user);
-  const { user } = userState;
+  const { user } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
 
-  const navigate = useRouter();
+  const features = [
+    {
+      icon: <Clock className="w-6 h-6" />,
+      title: "Time Tracking",
+      description: "Monitor your productivity with precise time tracking",
+    },
+    {
+      icon: <CheckSquare className="w-6 h-6" />,
+      title: "Task Management",
+      description: "Organize and prioritize your tasks efficiently",
+    },
+    {
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Progress Analytics",
+      description: "Track your performance with detailed insights",
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Team Collaboration",
+      description: "Work seamlessly with your team members",
+    },
+  ];
 
   return (
-    <div className="relative h-[50rem] mt-40 text-white font-bold text-center rounded-xl px-4 overflow-hidden">
-      {/* Heading */}
-      <BackgroundGradientAnimation>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white  rounded-xl">
-          {/* Full-Coverage Sparkle Effect */}
-          <SparklesCore
-            background="transparent"
-            minSize={1}
-            maxSize={2}
-            particleDensity={100}
-            className="absolute inset-0 w-full h-full z-0"
-            particleColor="#FFFFFF"
-          />
+    <div className="min-h-screen -mx-10 xl:mt-64 lg:mt-20 md:mt-24 sm:mt-20 mt-24 bg-gradient-to-b from-[#121212] via-slate-900 to-[#121212]">
+      {/* Hero Section */}
+      <div className="relative pt-20 pb-10 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-widest mb-6 z-10">
+        <div className="relative max-w-7xl mx-auto text-center">
+          {/* Main Heading */}
+          <h1 className="text-5xl sm:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mb-6">
             TaskFlow
           </h1>
 
-          {/* Sparkle Effect and Description */}
-          <div className="relative w-full sm:w-[50%] flex flex-col items-center text-center z-10">
-            <p className="relative z-20 text-xl sm:text-2xl xl:text-3xl font-light">
-              TaskFlow platform helps you to stay on top of your tasks and track
-              your time efficiently.
-            </p>
+          {/* Subtitle */}
+          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
+            Transform your workflow with intelligent task management and time
+            tracking
+          </p>
 
-            {/* Decorative Lines */}
-          </div>
-
-          <button
-            onClick={() => {
-              if (!user) {
-                navigate.push("/signup");
-              } else {
-                navigate.push("/kanban");
-              }
-            }}
-            className="mt-10 py-3 px-6 bg-white text-indigo-600 text-lg font-bold rounded-full hover:bg-indigo-100 transition duration-300 ease-in-out z-20 cursor-pointer"
+          {/* CTA Button */}
+          <motion.button
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            // onClick={() => router.push(user ? "/kanban" : "/signup")}
+            className="relative inline-flex items-center px-8 py-4 rounded-full text-lg font-semibold text-white overflow-hidden"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            {!user ? "Get Started" : "Manage your tasks easily!"}
-          </button>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600" />
+            <Link className="relative" href={user ? "/kanban" : "/signup"}>
+              {user ? "Go to Dashboard" : "Get Started Free"}
+            </Link>
+          </motion.button>
         </div>
-      </BackgroundGradientAnimation>
-      <div className="absolute inset-x-10 top-0 h-[2px] w-full bg-gradient-to-r from-transparent via-blue-800 to-transparent blur-sm z-10" />
-      <div className="absolute inset-x-16 top-4 h-[3px] w-3/4 bg-gradient-to-r from-transparent via-blue-900 to-transparent blur-sm z-10" />
-      <div className="absolute inset-x-20 top-6 h-[1px] w-2/4 bg-gradient-to-r from-transparent via-blue-900 to-transparent blur-sm z-10" />
+
+        {/* Features Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="relative max-w-7xl mx-auto mt-32 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 px-4"
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.05 }}
+              className="relative p-6 bg-gray-800 bg-opacity-50 rounded-xl border border-gray-700 backdrop-blur-lg"
+            >
+              <div className="text-purple-400 mb-4">{feature.icon}</div>
+              <h3 className="text-xl font-semibold text-white mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-400">{feature.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 }
