@@ -7,17 +7,11 @@ import trackImage from "@/assets/track_image.jpeg";
 import discussImage from "@/assets/discuss.jpeg";
 import Image from "next/image";
 import { TaskAdvantages } from "./components/TaskAdvantages";
-// import Feature from "./components/TaskFlowFeature";
 import TaskFlowFeature from "./components/TaskFlowFeature";
-import { CustomerSection } from "./components/CustomerSection";
 import { FooterSection } from "./components/FooterSection";
-// import { useSelector } from "react-redux";
-// import { RootState } from "@/app/store/store";
+import CustomerSection from "./components/CustomerSection";
 
 const HeroPage = () => {
-  // const userState = useSelector((state: RootState) => state.user);
-  // const { user } = userState;
-
   const taskAdvantage = [
     { title: "Manage" },
     { title: "Optimize" },
@@ -44,41 +38,39 @@ const HeroPage = () => {
 
   return (
     <div className="min-h-screen py-10 px-5 sm:px-10">
-      {/* Hero Heading */}
       <div className="relative flex flex-col lg:flex-row">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl max-w-[2000px] xl:text-9xl font-bold">
           Take Control Of Your Tasks
         </h1>
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-10 lg:mt-0 sm:absolute sm:top-[30px] sm:left-[200px] md:top-[40px] md:left-[230px] lg:top-[100px] lg:left-[300px]  xl:top-[125px] xl:left-[410px]">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-10 lg:mt-0 sm:absolute sm:top-[30px] sm:left-[200px] md:top-[40px] md:left-[230px] lg:top-[100px] lg:left-[300px] xl:top-[125px] xl:left-[410px]">
           <Image
             src={taskAdvantageImages[currentIndex].image}
             alt={taskAdvantage[currentIndex].title}
-            className="w-[200px] sm:w-[100px] md:w-[150px] lg:w-[200px] xl:w-[280px] rounded-lg"
-            loading="lazy"
+            className="w-full sm:w-[130px] md:w-[150px] lg:w-[200px] xl:w-[280px] xl:mt-10 rounded-lg"
+            loading="eager"
           />
-          <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold underline">
+          <span className="text-5xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold underline">
             {taskAdvantage[currentIndex].title}
           </span>
         </div>
       </div>
 
-      {/* 2nd Hero Component */}
-      <div className="min-h-screen ">
+      <div className="min-h-screen">
         <TaskAdvantages />
       </div>
 
-      {/* 3rd Hero Component */}
-      <div className="min-h-screen ">
+      <div className="min-h-screen">
+        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_80%,white_80%,transparent)]" />
         <TaskFlowFeature />
       </div>
 
-      {/* 4th hero Component */}
-      <div className="min-h-screen">
+      <div className="">
+        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_80%,white_80%,transparent)]" />
         <CustomerSection />
       </div>
 
-      {/* 5th hero Component */}
       <div className="min-h-[30vh] -mb-10 -mx-10">
+        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_80%,white_80%,transparent)]" />
         <FooterSection />
       </div>
     </div>
