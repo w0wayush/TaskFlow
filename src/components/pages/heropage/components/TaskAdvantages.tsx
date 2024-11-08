@@ -35,7 +35,7 @@ export function TaskAdvantages() {
   ];
 
   return (
-    <div className="min-h-screen -mx-10 xl:mt-64 lg:mt-20 md:mt-24 sm:mt-20 mt-24 bg-gradient-to-b from-[#121212] via-slate-900 to-[#121212]">
+    <div className="min-h-screen -mx-10 xl:mt-64 lg:mt-20 md:mt-24 sm:mt-20 mt-24 bg-gradient-to-b from-[#121212] via-slate-900 to-[#121212] mb-10">
       {/* Hero Section */}
       <div className="relative pt-20 pb-10 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0">

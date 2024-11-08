@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Flow from "@/assets/flow2.png";
 import { Button } from "@/components/ui/button";
 import { Theme } from "@/components/theme";
@@ -21,7 +21,36 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 const Navbar = () => {
   // const session = useSession();
   const userState = useSelector((state: RootState) => state.user);
+  const [scrolled, setScrolled] = useState<boolean>(false);
+  const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const { user } = userState;
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handleScroll = (): void => {
+      setScrolled(window.scrollY > 20);
+
+      // Clear existing timeout
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      setIsScrolling(true);
+
+      // Set new timeout
+      scrollTimeout.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 150);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
+  }, []);
 
   // console.log(session);
   //   const route = useRouter();
@@ -43,15 +72,22 @@ const Navbar = () => {
   };
 
   return (
-    <div className="border-b-2 rounded-b-md p-4 border-slate-700 px-10">
+    <div
+      className={`fixed rounded-b-md p-4 border-slate-800 px-10 top-0 border-b-2 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-black/50 backdrop-blur-md border-slate-700 border-white/10"
+          : "bg-transparent"
+      }`}
+    >
       <div className="flex justify-between items-center">
-        <div
+        <Link
+          href="/"
           className="flex items-center gap-1 cursor-pointer"
-          onClick={() => navigate.push("/")}
+          // onClick={() => navigate.push("/")}
         >
           <Image src={Flow} alt="Flow Zone Logo" className="h-16 w-16" />
           <h1 className="text-lg font-bold">TaskFlow</h1>
-        </div>
+        </Link>
 
         <div className="flex">
           {user && (
