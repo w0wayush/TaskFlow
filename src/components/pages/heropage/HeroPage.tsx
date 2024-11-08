@@ -37,12 +37,12 @@ const HeroPage = () => {
   }, [taskAdvantage.length]);
 
   return (
-    <div className="min-h-screen py-10 px-5 sm:px-10">
-      <div className="relative flex flex-col lg:flex-row">
+    <div className="min-h-screen py-20 px-5 sm:px-10 mt-20">
+      <div className="relative flex flex-col lg:flex-row ">
         <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl max-w-[2000px] xl:text-9xl font-bold">
           Take Control Of Your Tasks
         </h1>
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-10 lg:mt-0 sm:absolute sm:top-[30px] sm:left-[200px] md:top-[40px] md:left-[230px] lg:top-[100px] lg:left-[300px] xl:top-[125px] xl:left-[410px]">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-10 lg:mt-0 sm:absolute sm:top-[30px] sm:left-[200px] md:top-[40px] md:left-[230px] lg:top-[100px] lg:left-[300px] xl:top-[100px] xl:left-[410px]">
           <Image
             src={taskAdvantageImages[currentIndex].image}
             alt={taskAdvantage[currentIndex].title}
@@ -60,17 +60,17 @@ const HeroPage = () => {
       </div>
 
       <div className="min-h-screen">
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_80%,white_80%,transparent)]" />
+        <div className="h-1 bg-gradient-to-r from-pink-500 via-purple-800 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_50%,white_80%,transparent)]" />
         <TaskFlowFeature />
       </div>
 
       <div className="">
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_80%,white_80%,transparent)]" />
+        <div className="h-1 bg-gradient-to-r from-pink-500 via-purple-800 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_50%,white_80%,transparent)]" />
         <CustomerSection />
       </div>
 
       <div className="min-h-[30vh] -mb-10 -mx-10">
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_80%,white_80%,transparent)]" />
+        <div className="h-1 bg-gradient-to-r from-pink-500 via-purple-800 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_50%,white_80%,transparent)]" />
         <FooterSection />
       </div>
     </div>
