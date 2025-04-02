@@ -11,7 +11,7 @@ export default function Custom404() {
 
       {/* Error Message */}
       <p className="text-2xl mt-4 font-semibold">
-        Oops! The page you're looking for doesn't exist.
+        Oops! The page you&apos;re looking for doesn&apos;t exist.
       </p>
 
       <p className="text-lg mt-2 text-gray-400">

@@ -1,55 +1,55 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
-import { Card, CardContent } from "@/components/ui/card";
-import { Star, Quote, ChevronRight } from "lucide-react";
+// import { Card, CardContent } from "@/components/ui/card";
+import { ChevronRight } from "lucide-react";
 
-const StarRating = ({ rating }: { rating: number }) => (
-  <div className="flex gap-0.5">
-    {[...Array(5)].map((_, index) => (
-      <Star
-        key={index}
-        className={`w-4 h-4 ${
-          index < rating
-            ? "fill-yellow-500 text-yellow-500"
-            : "fill-gray-300 text-gray-300"
-        }`}
-      />
-    ))}
-  </div>
-);
+// const StarRating = ({ rating }: { rating: number }) => (
+//   <div className="flex gap-0.5">
+//     {[...Array(5)].map((_, index) => (
+//       <Star
+//         key={index}
+//         className={`w-4 h-4 ${
+//           index < rating
+//             ? "fill-yellow-500 text-yellow-500"
+//             : "fill-gray-300 text-gray-300"
+//         }`}
+//       />
+//     ))}
+//   </div>
+// );
 
-const TestimonialCard = ({
-  quote,
-  name,
-  title,
-}: {
-  quote: string;
-  name: string;
-  title: string;
-}) => (
-  <Card className="group relative bg-gradient-to-br from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 transition-all duration-300 border-white/10 overflow-hidden">
-    <CardContent className="p-8">
-      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-2xl rounded-full transform translate-x-8 -translate-y-8" />
+// const TestimonialCard = ({
+//   quote,
+//   name,
+//   title,
+// }: {
+//   quote: string;
+//   name: string;
+//   title: string;
+// }) => (
+//   <Card className="group relative bg-gradient-to-br from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 transition-all duration-300 border-white/10 overflow-hidden">
+//     <CardContent className="p-8">
+//       <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-2xl rounded-full transform translate-x-8 -translate-y-8" />
 
-      <Quote className="w-8 h-8 mb-6 text-blue-400 opacity-50" />
+//       <Quote className="w-8 h-8 mb-6 text-blue-400 opacity-50" />
 
-      <p className="text-lg text-gray-100 mb-6 leading-relaxed relative z-10">
-        "{quote}"
-      </p>
+//       <p className="text-lg text-gray-100 mb-6 leading-relaxed relative z-10">
+//         &quot;{quote}&quot;
+//       </p>
 
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-          {name.charAt(0)}
-        </div>
-        <div>
-          <p className="font-semibold text-white mb-1">{name}</p>
-          <p className="text-sm text-gray-400">{title}</p>
-        </div>
-      </div>
-    </CardContent>
-  </Card>
-);
+//       <div className="flex items-center gap-4">
+//         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+//           {name.charAt(0)}
+//         </div>
+//         <div>
+//           <p className="font-semibold text-white mb-1">{name}</p>
+//           <p className="text-sm text-gray-400">{title}</p>
+//         </div>
+//       </div>
+//     </CardContent>
+//   </Card>
+// );
 
 const MetricCard = ({ value, label }: { value: string; label: string }) => (
   <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 text-center">

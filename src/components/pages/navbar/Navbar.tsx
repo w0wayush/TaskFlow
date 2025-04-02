@@ -30,6 +30,7 @@ const Navbar = () => {
     const handleScroll = (): void => {
       setScrolled(window.scrollY > 20);
 
+      console.log(isScrolling);
       // Clear existing timeout
       if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);

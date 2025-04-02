@@ -43,7 +43,7 @@ const SignUpPage = () => {
       const response = await axios.post(`${backendUrl}/api/users/signup`, data);
 
       // Handle success
-      // console.log(response.data);
+      console.log(response.data);
       toast({
         title: "Successfully signed up!",
       });

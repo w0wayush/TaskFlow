@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { motion } from "framer-motion";
@@ -8,9 +7,9 @@ import Link from "next/link";
 
 export function TaskAdvantages() {
   const { user } = useSelector((state: RootState) => state.user);
-  const router = useRouter();
+  // const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
-
+  console.log(isHovered);
   const features = [
     {
       icon: <Clock className="w-6 h-6" />,
