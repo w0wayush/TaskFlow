@@ -13,12 +13,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 // import { useNavigate } from "react-router-dom";
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 const SignUpPage = () => {
   const navigate = useRouter();
+  const { toast } = useToast();
 
   const { data: session } = useSession();
   const {
@@ -41,7 +43,11 @@ const SignUpPage = () => {
       const response = await axios.post(`${backendUrl}/api/users/signup`, data);
 
       // Handle success
-      console.log(response.data);
+      // console.log(response.data);
+      toast({
+        title: "Successfully signed up!",
+      });
+
       navigate.push("/login");
     } catch (error) {
       // Handle error
@@ -50,6 +56,17 @@ const SignUpPage = () => {
           "Error submitting form:",
           error.response?.data || error.message
         );
+
+        const errorMessage =
+          typeof error.response?.data === "string"
+            ? error.response?.data
+            : error.response?.data?.message || error.message;
+
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: errorMessage,
+        });
       } else {
         console.error("Unexpected error:", error);
       }

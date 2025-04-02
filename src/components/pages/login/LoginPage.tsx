@@ -15,6 +15,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/app/store/slices/userSlice";
+import { useToast } from "@/hooks/use-toast";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
@@ -22,6 +23,7 @@ const LoginPage = () => {
   const navigate = useRouter();
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const {
     register,
@@ -42,8 +44,11 @@ const LoginPage = () => {
       const response = await axios.post(`${backendUrl}/api/users/login`, data);
 
       // Handle success
-      console.log(response.data);
+      // console.log(response.data);
       const { token, user } = response.data;
+      toast({
+        title: "Successfully logged in!",
+      });
 
       // Dispatch action to update Redux store
       dispatch(setUser({ token, user }));
@@ -60,6 +65,17 @@ const LoginPage = () => {
           "Error submitting form:",
           error.response?.data || error.message
         );
+
+        const errorMessage =
+          typeof error.response?.data === "string"
+            ? error.response?.data
+            : error.response?.data?.message || error.message;
+
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: errorMessage,
+        });
       } else {
         console.error("Unexpected error:", error);
       }
