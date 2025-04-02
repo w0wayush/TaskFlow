@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Providers } from "./provider";
 import { ReduxProvider } from "./redux-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,6 +42,7 @@ export default function RootLayout({
           <ReduxProvider>
             <Providers>{children}</Providers>
           </ReduxProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

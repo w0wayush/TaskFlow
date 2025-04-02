@@ -430,8 +430,11 @@ const Kanban = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-100 to-indigo-300 dark:from-gray-800 dark:to-gray-900 transition-all ease-in-out duration-500">
-      <Navbar />
+    <div className="min-h-screen bg-gradient-to-br from-teal-100 to-indigo-300 dark:from-gray-800 dark:to-gray-900 transition-all ease-in-out duration-500 mt-24">
+      <div>
+        <Navbar />
+        <div className="bg-gradient-to-r from-pink-500 via-purple-800 to-pink-500 [mask-image:linear-gradient(to_right,transparent,white_50%,white_80%,transparent)]"></div>
+      </div>
       <div className="container mx-auto p-6">
         <h1 className="text-4xl font-extrabold mb-6 text-center tracking-tight text-gray-800 dark:text-white transition-colors duration-300">
           TaskFlow Dashboard
